@@ -1,0 +1,140 @@
+#include <iostream>
+#include <cmath>
+#include <windows.h>
+using namespace std;
+
+void GenerateArray(const int SIZE, int arr[])
+{
+	srand(time(0));
+	int min = 1, max = 20;
+	for (int i = 0; i < SIZE; i++)
+	{
+		arr[i] = rand() % (max - min + 1) + min;
+	}
+	for (int i = 0; i < SIZE; i++)
+	{
+		std::cout << arr[i] << " ";
+	}
+	std::cout << endl;
+}
+
+// перше завдання
+int MaxElement(const int SIZE, int arr[])
+{
+	int maxElement = arr[0];
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (arr[i] > maxElement)
+		{
+			maxElement = arr[i];
+		}
+	}
+	return maxElement;
+}
+int MaxIndex(const int SIZE, int arr[])
+{
+	int maxElement = arr[0];
+	int maxIndex = 0;
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (arr[i] > maxElement)
+		{
+			maxIndex = i;
+		}
+	}
+	return maxIndex;
+}
+int MinElement(const int SIZE, int arr[])
+{
+	int minElement = arr[0];
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (arr[i] < minElement)
+		{
+			minElement = arr[i];
+		}
+	}
+	return minElement;
+}
+int MinIndex(const int SIZE, int arr[])
+{
+	int minElement = arr[0];
+	int minIndex = 0;
+	
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (arr[i] < minElement)
+		{
+			minElement = arr[i];
+			minIndex = i;
+		}
+	}
+	return minIndex;
+}
+
+// друге завдання
+void MirroredArray(const int SIZE, int arr[])
+{
+	for (int i = SIZE-1; i >= 0; i--)
+	{
+		std::cout << arr[i] << " ";
+	}
+}
+
+// третє завдання
+void PrimeNumbers(const int SIZE, int arr[], int counter)
+{
+	for (int i = 0; i < SIZE; i++)
+	{
+		bool isPrimeNumber = true;
+		if (arr[i] < 2)
+		{
+			isPrimeNumber = false;
+		}
+		else
+		{
+			for (int j = 2; j <= sqrt(arr[i]); j++)
+			{ 
+				if (arr[i] % j == 0)
+				{
+					isPrimeNumber = false;
+					break;
+				}
+			}
+		}
+		if (isPrimeNumber)
+		{
+			counter++;
+		}
+	}
+	std::cout << counter;
+}
+
+int main()
+{
+	const int SIZE = 10;
+	int arr[SIZE]{};
+	// перше завдання
+	cout << "FIRST TASK" << endl;
+	cout << "Array: ";
+	GenerateArray(SIZE, arr);
+	cout << "Minimum element: " << MinElement(SIZE, arr) << "; " << "index: " << MinIndex(SIZE, arr) << endl;
+	cout << "Maximum element: " << MaxElement(SIZE, arr) << "; " << "index: " << MaxIndex(SIZE, arr) << endl << endl;
+
+	// друге завдання
+	cout << "SECOND TASK" << endl;
+	cout << "Array: ";
+	GenerateArray(SIZE, arr);
+	cout << "Mirrored array: ";
+	MirroredArray(SIZE, arr);
+	cout << endl << endl;
+
+	// третє завдання
+	cout << "THIRD TASK" << endl;
+	cout << "Array: ";
+	GenerateArray(SIZE, arr);
+	int counter = 0;
+	cout << "Amount of prime numbers: ";
+	PrimeNumbers(SIZE, arr, counter);
+	return 0;
+}
