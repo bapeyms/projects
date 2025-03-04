@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+
+enum Menu
+{
+    PLUS = 1,
+    MINUS = 2,
+    DIVIDE = 3,
+    MULT = 4,
+    EXIT = 0
+};
+
+int Plus(int a, int b) 
+{ 
+    return a + b; 
+}
+int Minus(int a, int b)
+{ 
+    return a - b;
+}
+int Mult(int a, int b)
+{ 
+    return a * b;
+}
+double Divide(int a, int b)
+{
+    if (b == 0)
+    {
+        cout << "Division by zero is impossible! Please, choose another number!" << endl;
+        return 0;
+    }
+    return a / b;
+}
+void Menu()
+{
+    cout << "CALCULATOR" << endl;
+    cout << "-----------------" << endl;
+    cout << "MENU:" << endl;
+    cout << " 1 - Plus " << endl;
+    cout << " 2 - Minus " << endl;
+    cout << " 3 - Divide " << endl;
+    cout << " 4 - Multiply " << endl;
+    cout << " 0 - Exit" << endl;
+    cout << "-----------------" << endl << endl;
+}
+
+int main()
+{
+    Menu();
+    int n1, n2, operation;
+    int value = 0;
+    do
+    {
+        cout << "Choose an operation: ";
+        cin >> operation;
+        if (operation == EXIT)
+        {
+            cout << "Thanks for using me! Bye" << endl;
+            break;
+        }
+        else if (operation > 4)
+        {
+            cout << "Unavaliable operation! Please, choose another one" << endl;
+            break;
+        }
+        cout << "First number: ";
+        cin >> n1;
+        cout << "Second number: ";
+        cin >> n2;
+
+        switch (operation)
+        {
+        case PLUS:
+            cout << n1 << " + " << n2 << " = " << Plus(n1, n2) << endl;
+            break;
+        case MINUS:
+            cout << n1 << " - " << n2 << " = " << Minus(n1, n2) << endl;
+            break;
+        case DIVIDE:
+            cout << n1 << " / " << n2 << " = " << Divide(n1, n2) << endl;
+            break;
+        case MULT:
+            cout << n1 << " * " << n2 << " = " << Mult(n1, n2) << endl;
+            break;
+        }
+        cout << endl;
+        } while (value == 0);
+        return 0;
+}
+
+
