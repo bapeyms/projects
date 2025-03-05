@@ -1,0 +1,238 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+// генерація масивів
+void Generate(int arr[], int size)
+{
+	int min = 1, max = 50;
+	if (size > 0)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = rand() % (max - min + 1) + min;
+		}
+	}
+}
+void Generate(int rows, int cols, int arr[][3])
+{
+	int min = 1, max = 50;
+	if (rows > 0 && cols > 0)
+	{
+		for (int i = 0; i < rows; i++)
+		{
+			for (int j = 0; j < cols; j++)
+			{
+				arr[i][j] = rand() % (max - min + 1) + min;
+			}
+		}
+	}
+}
+void Generate(int depth, int rows, int cols, int arr[][3][3])
+{
+	int min = 1, max = 50;
+	if (rows > 0 && cols > 0 && depth)
+	{
+		for (int i = 0; i < depth; i++)
+		{
+			for (int j = 0; j < rows; j++)
+			{
+				for (int k = 0; k < cols; k++)
+				{
+					arr[i][j][k] = rand() % (max - min + 1) + min;
+				}
+			}
+		}
+	}
+}
+
+// вивід
+void ShowArray(int arr[], int size)
+{
+	if (size > 0)
+	{
+		cout << "- One-dimensional array" << endl;
+		for (int i = 0; i < size; i++)
+		{
+			cout << arr[i] << " ";
+		}
+		cout << endl << endl;
+	}
+}
+void ShowArray(int rows, int cols, int arr[][3])
+{
+	if (rows > 0 && cols > 0)
+	{
+		cout << "- Two-dimensional array" << endl;
+		for (int i = 0; i < rows; i++)
+		{
+			for (int j = 0; j < cols; j++)
+			{
+				cout << arr[i][j] << " ";
+			}
+			cout << endl;
+		}
+		cout << endl;
+	}	
+}
+void ShowArray(int depth, int rows, int cols, int arr[][3][3])
+{
+	if (rows > 0 && cols > 0 && depth)
+	{
+		cout << "- Three-dimensional array" << endl;
+		for (int i = 0; i < depth; i++)
+		{
+			for (int j = 0; j < rows; j++)
+			{
+				for (int k = 0; k < cols; k++)
+				{
+					cout << arr[i][j][k] << " ";
+				}
+				cout << endl;
+			}
+			cout << endl;
+		}
+	}
+}
+
+// пошук максимуму
+void Max(int arr[], int size)
+{
+	if (size > 0)
+	{
+		int max = arr[0];
+		for (int i = 0; i < size; i++)
+		{
+			if (arr[i] > max)
+			{
+				max = arr[i];
+			}
+		}
+		cout << "- Maximum (1D): " << max << endl;
+	}
+}
+void Max(int rows, int cols, int arr[][3])
+{
+	if (rows > 0 && cols > 0)
+	{
+		int max = arr[0][0];
+		for (int i = 0; i < rows; i++)
+		{
+			for (int j = 0; j < cols; j++)
+			{
+				if (arr[i][j] > max)
+				{
+					max = arr[i][j];
+				}
+			}
+		}
+		cout << "- Maximum (2D): " << max << endl;;
+	}
+}
+void Max(int depth, int rows, int cols, int arr[][3][3])
+{
+	if (rows > 0 && cols > 0 && depth > 0 )
+	{
+		int max = arr[0][0][0];
+		for (int i = 0; i < depth; i++)
+		{
+			for (int j = 0; j < rows; j++)
+			{
+				for (int k = 0; k < cols; k++)
+				{
+					if (arr[i][j][k] > max)
+					{
+						max = arr[i][j][k];
+					}
+				}
+			}
+		}
+		cout << "- Maximum (3D): " << max << endl;
+	}
+}
+void Max(int a, int b)
+{
+	if (a > b)
+	{
+		cout << "- Maximum (two values): " << a << endl;
+	}
+	else if (b > a)
+	{
+		cout << "- Maximum (two values): " << b << endl;
+	}
+	else
+	{
+		cout << "- Maximum (two values): the values are the same" << endl;
+	}
+}
+void Max(int a, int b, int c)
+{
+	const int SIZE = 3;
+	int arr[SIZE]{};
+	arr[0] = a, arr[1] = b, arr[2] = c;
+	int max = arr[0];
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (arr[i] > max)
+		{
+			max = arr[i];
+		}
+	}
+	if (arr[0] == arr[1] && arr[1] == arr[2] && arr[2] == arr[0])
+	{
+		cout << "- Maximum (three values): the values are the same";
+	}
+	else if (max)
+	{
+		cout << "- Maximum (three values): " << max << endl;
+	}
+}
+
+int main()
+{
+	srand(time(0));
+	// одновимірний масив
+	cout << "DATA" << endl;
+	const int SIZE = 9;
+	int arr[SIZE]{};
+	Generate(arr, SIZE);
+	ShowArray(arr, SIZE);
+	// двовимірний масив
+	const unsigned int ROWS = 3;
+	const unsigned int COLS = 3;
+	int arr2d[ROWS][COLS]{};
+	Generate(ROWS, COLS, arr2d);
+	ShowArray(ROWS, COLS, arr2d);
+	// трьохвимірний масив
+	const unsigned int DEPTH = 3;
+	int arr3d[DEPTH][ROWS][COLS]{};
+	Generate(DEPTH, ROWS, COLS, arr3d);
+	ShowArray(DEPTH, ROWS, COLS, arr3d);
+	// два числа
+	cout << "- Comparing two values" << endl;
+	int a, b;
+	cout << "First value: ";
+	cin >> a;
+	cout << "Second value: ";
+	cin >> b;
+	cout << endl;
+	// три числа
+	cout << "- Comparing three values" << endl;
+	int c, d, e;
+	cout << "First value: ";
+	cin >> c;
+	cout << "Second value: ";
+	cin >> d;
+	cout << "Third value: ";
+	cin >> e;
+	cout << endl;
+
+	// максимуми
+	cout << "MAXIMUMS" << endl;
+	Max(arr, SIZE);
+	Max(ROWS, COLS, arr2d);
+	Max(DEPTH, ROWS, COLS, arr3d);
+	Max(a, b);
+	Max(c,d,e);
+	return 0;
+}
