@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+
+int my_increment(int* a)
+{
+	int n = 1;
+	return *a = *a + n;
+}
+void multiply(int* b, int* c, int* mult)
+{
+	*mult = *b * *c;
+}
+void negate(double* d)
+{
+	if (*d == 0)
+	{
+		cout << "0 cannot be changed!";
+	}
+	else
+	{
+		*d = *d * -1;
+		cout << *d;
+	}
+}
+int setValue(int* e, int* newValue)
+{
+	return *e = *newValue;
+}
+int concatenateDigits(int* f, int* g, int* result)
+{
+	int temp = *g;
+	int AuxiliaryTen = 1;
+	while (temp > 0)
+	{
+		temp /= 10;
+		AuxiliaryTen *= 10;
+	}
+	return *result = (*f) * AuxiliaryTen + (*g);
+}
+
+
+int main()
+{
+	// first task
+	cout << "FIRST TASK" << endl;
+	int a;
+	cout << "Value: ";
+	cin >> a;
+	int* ptrA = &a;
+	cout << "Changed value: " << my_increment(ptrA) << endl << endl;
+
+	// second task
+	cout << "SECOND TASK" << endl;
+	int b, c;
+	cout << "First value: ";
+	cin >> b;
+	int* ptrB = &b;
+	cout << "Second value: ";
+	cin >> c;
+	int* ptrC = &c;
+	int mult = 0;
+	int* ptrMult = &mult;
+	multiply(ptrB, ptrC, ptrMult);
+	cout << b << " x " << c << " = " << mult << endl << endl;
+
+	// third task
+	cout << "THIRD TASK" << endl;
+	double d;
+	cout << "Value: ";
+	cin >> d;
+	double* ptrD = &d;
+	cout << "Changed value: ";
+	negate(ptrD);
+	cout << endl << endl;
+
+	// fourth task
+	cout << "FOURTH TASK" << endl;
+	int e = 17;
+	cout << "Starting value: " << e << endl;
+	int* ptrE = &e;
+	int newValue;
+	cout << "New value: ";
+	cin >> newValue;
+	int* ptrNewValue = &newValue;
+	cout << "Replacement: " << setValue(ptrE, ptrNewValue) << endl << endl;
+
+	// fifth task
+	cout << "FIFTH TASK" << endl;
+	int f, g, result;
+	int* ptrResult = &result;
+	cout << "First value: ";
+	cin >> f;
+	int* ptrF = &f;
+	cout << "Second value: ";
+	cin >> g;
+	int* ptrG = &g;
+	result = concatenateDigits(ptrF, ptrG, ptrResult);
+	cout << f << " and " << g << " = " << concatenateDigits(ptrF, ptrG, ptrResult) << endl;
+
+	return 0;
+}
