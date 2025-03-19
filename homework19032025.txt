@@ -1,0 +1,121 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+void ShowArray(int* arr, int size)
+{
+	if (size > 0)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			cout << *(arr + i) << " ";
+		}
+	}
+}
+void Random(int* arr, int size)
+{
+	if (size > 0)
+	{
+		for (int i = size-1; i > 0; --i)
+		{
+			// алгоритм Фішера-Йетса
+			int j = rand() % (i + 1);
+			int temp = *(arr + i);
+			*(arr + i) = *(arr + j);
+			*(arr + j) = temp;
+		}
+	}
+}
+int Index(int* arr, int size, int* element)
+{
+	if (size > 0)
+	{
+		int index = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (*(arr + i) == *element)
+			{
+				index = i;
+			}
+		}
+		return index;
+	}
+}
+void LeftDecline(int* arr, int index)
+{
+	if (index >= 0)
+	{
+		for (int i = 0; i < index-1; i++)
+		{
+			bool sorted = true;
+			for (int j = 0; j < index - 1 - i; j++)
+			{
+				if (*(arr+j) < *(arr+j+1))
+				{
+					int temp = *(arr + j);
+					*(arr + j) = *(arr + j + 1);
+					*(arr + j + 1) = temp;
+					sorted = false;
+				}
+			}
+			if (sorted)
+			{
+				break;
+			}
+		}
+	}
+}
+void RightGrowth(int* arr, int size, int* index)
+{
+	if (*index >= 0)
+	{
+		for (int i = *index + 1; i < size - 1; i++)
+		{
+			bool sorted = true;
+			for (int j = *index + 1; j < size - 1 - (i - *index - 1); j++)
+			{
+				if (*(arr + j) > *(arr + j + 1))
+				{
+					int temp = *(arr + j);
+					*(arr + j) = *(arr + j + 1);
+					*(arr + j + 1) = temp;
+					sorted = false;
+				}
+			}
+			if (sorted)
+			{
+				break;
+			}
+		}
+	}
+}
+
+
+int main()
+{
+	srand(time(0));
+	int min = 1, max = 20;
+	const int SIZE = 20;
+	int arr[SIZE]{ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 };
+	int* ptrArr = arr;
+	cout << "Array: ";
+	ShowArray(ptrArr, SIZE);
+	cout << endl;
+	cout << "Randomised array: ";
+	Random(ptrArr, SIZE);
+	ShowArray(ptrArr, SIZE);
+	cout << endl;
+
+	int element = rand() % (max - min + 1) + min;
+	int* ptrElement = &element;
+	int index = Index(ptrArr, SIZE, ptrElement);
+	int* ptrIndex = &index;
+	cout << "Element: " << element;
+	cout << ", its index: " << index << endl;
+
+	cout << "Sorted array: ";
+	LeftDecline(ptrArr, index);
+	RightGrowth(ptrArr, SIZE, ptrIndex);
+	ShowArray(ptrArr, SIZE);
+	return 0;
+}
