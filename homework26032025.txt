@@ -1,0 +1,176 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+// загальні функції
+int* DynamicArray(int size)
+{
+	if (size > 0)
+	{
+		return new int[size];
+	}
+}
+void Random(int size, int* arr, int min, int max)
+{
+	if (size > 0)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			*(arr + i) = rand() % (max - min + 1) + min;
+		}
+	}
+}
+void Print(int size, int* arr)
+{
+	if (size > 0)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			cout << *(arr + i) << " ";
+		}
+		cout << endl;
+	}
+}
+// друге завдання
+void Calculations(int size, int* arr, int* positive, int* negative, int* zeros)
+{
+	if (size > 0)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			if (*(arr + i) > 0)
+			{
+				(*positive)++;
+			}
+			else if (*(arr + i) < 0)
+			{
+				(*negative)++;
+			}
+			else
+			{
+				(*zeros)++;
+			}
+		}
+	}
+}
+// четверте завдання
+int* DeleteNegative(int size, int& sizeTask, int* arr1)
+{
+	if (size > 0)
+	{
+		int newSize = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (*(arr1 + i) >= 0)
+			{
+				newSize++;
+			}
+		}
+		sizeTask = newSize;
+		int* arrTask = new int[sizeTask];
+		int j = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (*(arr1 + i) >= 0)
+			{
+				*(arrTask + j) = *(arr1 + i);
+				j++;
+			}
+		}
+		return arrTask;
+	}
+}
+//шосте завдання
+int* AddElements(int size2, int* arr2, int& addedSize, int* addedArr, int index, int& sizeNew)
+{
+	sizeNew = size2 + addedSize;
+	int* arrNew = new int[sizeNew];
+	if (sizeNew > 0)
+	{
+		int j = 0;
+		bool inserted = false;
+		for (int i = 0; i < size2; i++)
+		{
+			*(arrNew + j) = *(arr2 + i);
+			j++;
+			if (!inserted && *(arr2 + i) == index)
+			{
+				for (int k = 0; k < addedSize; k++)
+				{
+					*(arrNew + j) = *(addedArr + k);
+					j++;
+				}
+				inserted = true;
+			}
+		}
+		return arrNew;
+	}
+}
+
+
+int main()
+{
+	cout << "SECOND TASK" << endl;
+	srand(time(0));
+	int min = -10, max = 20;
+	int size;
+	cout << "Size: ";
+	cin >> size;
+	int* arr = DynamicArray(size);
+	Random(size, arr, min, max);
+	cout << "Array: ";
+	Print(size, arr);
+	int positive = 0, negative = 0, zeros = 0;
+	Calculations(size, arr, &positive, &negative, &zeros);
+	cout << "----------------" << endl;
+	cout << "Calculations" << endl;
+	cout << "Positive numbers: " << positive << endl;
+	cout << "Negative numbers: " << negative << endl;
+	cout << "Zeros: " << zeros << endl;
+	cout << "----------------" << endl << endl;
+	delete[] arr;
+
+	cout << "FOURTH TASK" << endl;
+	int size1;
+	cout << "Size: ";
+	cin >> size1;
+	int* arr1 = DynamicArray(size1);
+	Random(size1, arr1, min, max);
+	cout << "Array: ";
+	Print(size1, arr1);
+	int sizeTask;
+	int* arrTask = DeleteNegative(size1, sizeTask, arr1);
+	cout << "Sorted array: ";
+	Print(sizeTask, arrTask);
+	cout << endl;
+	delete[] arr1;
+	delete[] arrTask;
+
+	cout << "SIXTH TASK" << endl;
+	cout << "--------------" << endl;
+	cout << "- Initial values" << endl;
+	int size2;
+	cout << "Size: ";
+	cin >> size2;
+	int* arr2 = DynamicArray(size2);
+	Random(size2, arr2, min, max);
+	cout << "Array: ";
+	Print(size2, arr2);
+	cout << "- Added values" << endl;
+	int addedSize;
+	cout << "Size: ";
+	cin >> addedSize;
+	int* addedArr = DynamicArray(size2);
+	Random(addedSize, addedArr, min, max);
+	cout << "Array: ";
+	Print(addedSize, addedArr);
+	cout << "--------------" << endl;
+	int index;
+	cout << "Choose index: ";
+	cin >> index;
+	int sizeNew;
+	int* sizeArr = AddElements(size2, arr2, addedSize, addedArr, index, sizeNew);
+	cout << "Expanded array: ";
+	Print(sizeNew, sizeArr);
+	return 0;
+}
