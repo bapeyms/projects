@@ -1,0 +1,107 @@
+#include <iostream>
+#include <windows.h>
+#include <cstring>
+#include "stdio.h"
+using namespace std;
+
+template <typename T>
+T* DynamicArray(const int SIZE)
+{
+	return new T[SIZE];
+}
+void Random(const int SIZE, char* str, int minAscii, int maxAscii)
+{
+	for (int i = 0; i < SIZE; i++)
+	{
+		*(str + i) = rand() % (maxAscii - minAscii + 1) + minAscii;
+	}
+	str[SIZE - 1] = '\0';
+}
+void Print(const int SIZE, char* str)
+{
+	for (int i = 0; i < SIZE - 1; i++)
+	{
+		cout << *(str + i) << " ";
+	}
+	cout << endl;
+}
+char* mystrchr(const int SIZE, char* str, char s)
+{
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (*(str + i) == s)
+		{
+			return str + i;
+		}
+	}
+	return nullptr;
+}
+char* mystrstr(char* str1, char* str2)
+{
+	int len1 = strlen(str1);
+	int len2 = strlen(str2);
+	if (len2 == 0)
+	{
+		return str1;
+	}
+	for (int i = 0; i <= len1 - len2; i++)
+	{
+		int j = 0;
+		while (j < len2 && *(str1 + (i + j)) == *(str2 + j))
+		{
+			j++;
+		}
+		if (j == len2)
+		{
+			return str1 + i;
+		}
+	}
+	return nullptr;
+}
+
+int main()
+{
+	cout << "FIRST TASK" << endl;
+	srand(time(0));
+	const int SIZE1 = 20;
+	char* str1 = DynamicArray<char>(SIZE1);
+	Random(SIZE1, str1, 97, 122);
+	cout << "Char array: ";
+	Print(SIZE1, str1);
+	char s = 's';
+	char* findS = mystrchr(SIZE1, str1, s);
+	cout << "Search for \"s\" is performed..." << endl;
+	Sleep(2000);
+	if (findS == nullptr)
+	{
+		cout << "This char array does not have \"s\" :((";
+	}
+	else
+	{
+		cout << "Index of the first found \"s\": " << (findS - str1);
+	}
+	cout << endl << endl;
+	delete[] str1;
+
+	cout << "SECOND TASK" << endl;
+	const int SIZE2 = 100;
+	char* str2 = DynamicArray<char>(SIZE2);
+	cout << "Enter a char array (with more than two words):";
+	cin.getline(str2, SIZE2);
+	const int SIZE3 = 100;
+	char* str3 = DynamicArray<char>(SIZE3);
+	cout << "Enter a char subarray:";
+	cin.getline(str3, SIZE3);
+	char* foundSubarray = mystrstr(str2, str3);
+	if (foundSubarray)
+	{
+		cout << "Found subarray:" << foundSubarray;
+	}
+	else
+	{
+		cout << "Subarray was not found :((";
+	}
+	delete[] str2;
+	delete[] str3;
+	return 0;
+}
