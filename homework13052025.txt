@@ -1,0 +1,251 @@
+#include <iostream>
+#include <cstring>
+#include <stdio.h>
+using namespace std;
+
+// first task
+struct WashingMachine
+{
+	char firm[50];
+	char colour[24];
+	unsigned int width;
+	unsigned int length;
+	unsigned int height;
+	unsigned int power;
+	unsigned int spinSpeed;
+	unsigned int heatingTemperature;
+};
+WashingMachine createWS()
+{
+	WashingMachine ws{};
+	cout << "Firm: ";
+	cin.getline (ws.firm, 50);
+	cout << "Colour: ";
+	cin.getline(ws.colour, 24);
+	cout << "Width: ";
+	cin >> ws.width;
+	cout << "Length: ";
+	cin >> ws.length;
+	cout << "Height: ";
+	cin >> ws.height;
+	cout << "Power: ";
+	cin >> ws.power;
+	cout << "Spin speed: ";
+	cin >> ws.spinSpeed;
+	cout << "Tempurature: ";
+	cin >> ws.heatingTemperature;
+	return ws;
+}
+void Show(WashingMachine ws)
+{
+	cout << "Firm: " << ws.firm << endl;
+	cout << "Colour: " << ws.colour << endl;
+	cout << "Width: " << ws.width << " cm" << endl;
+	cout << "Length: " << ws.length << " cm" << endl;
+	cout << "Height: " << ws.height << " cm" << endl;
+	cout << "Power: " << ws.power << " kWh" << endl;
+	cout << "Spin speed: " << ws.spinSpeed << " RPM" << endl;
+	cout << "Tempurature: " << ws.heatingTemperature << " " << char(248) << "C" << endl;
+}
+
+// second task
+struct Iron
+{
+	char firm[50];
+	char model[30];
+	char colour[24];
+	unsigned int minTemp;
+	unsigned int maxTemp;
+	bool steamOutput;
+	unsigned int power;
+};
+Iron createIron()
+{
+	Iron iron{};
+	cin.ignore();
+	cout << "Firm: ";
+	cin.getline(iron.firm, 50);
+	cout << "Model: ";
+	cin.getline(iron.model, 30);
+	cout << "Colour: ";
+	cin.getline(iron.colour, 24);
+	cout << "Min tempurature: ";
+	cin >> iron.minTemp;
+	cout << "Max tempurature: ";
+	cin >> iron.maxTemp;
+	cout << "Steam output (yes(1)/no(0)): ";
+	cin >> iron.steamOutput;
+	cout << "Power: ";
+	cin >> iron.power;
+	return iron;
+}
+Iron* IronDynamicArray(int amount)
+{
+	return new Iron[amount];
+}
+void Show(Iron iron)
+{
+	cout << "Firm: " << iron.firm << endl;
+	cout << "Model: " << iron.model << endl;
+	cout << "Colour: " << iron.colour << endl;
+	cout << "Min tempurature: " << iron.minTemp << char(248) << "C" << endl;
+	cout << "Max tempurature: " << iron.maxTemp << char(248) << "C" << endl;
+	cout << "Steam output (yes(1)/no(0)): " << iron.steamOutput << endl;
+	cout << "Power: " << iron.power << " kWh" << endl;
+}
+
+// third task
+struct Boiler
+{
+	char firm[50];
+	char colour[24];
+	unsigned int power;
+	unsigned int tankCapacity;
+	unsigned int heatingTemp;
+};
+Boiler createBoiler()
+{
+	Boiler boiler{};
+	cin.ignore();
+	cout << "Firm: ";
+	cin.getline(boiler.firm, 50);
+	cout << "Colour: ";
+	cin.getline(boiler.colour, 24);
+	cout << "Power: ";
+	cin >> boiler.power;
+	cout << "Tank capacity: ";
+	cin >> boiler.tankCapacity;
+	cout << "Heating tempurature: ";
+	cin >> boiler.heatingTemp;
+	return boiler;
+}
+Boiler* BoilerDynamicArray(int quantity)
+{
+	return new Boiler[quantity];
+}
+void Show(Boiler boiler)
+{
+	cout << "Firm: " << boiler.firm << endl;
+	cout << "Colour: " << boiler.colour << endl;
+	cout << "Power: " << boiler.power << " kWh" << endl;
+	cout << "Tank capacity: " << boiler.tankCapacity << "l" << endl;
+	cout << "Heating tempurature: " << boiler.heatingTemp << char(248) << "C" << endl;
+}
+
+// fourth task
+struct MakeSound
+{
+	char sound[30];
+};
+struct Animal
+{
+	char name[30];
+	char clas[30];
+	char nickname[30];
+	MakeSound sound;
+};
+Animal createAnimal()
+{
+	Animal animal{};
+	cin.ignore();
+	cout << "Name: ";
+	cin.getline(animal.name, 30);
+	cout << "Class: ";
+	cin.getline(animal.clas, 30);
+	cout << "Nickname: ";
+	cin.getline(animal.nickname, 30);
+	cout << "Animal says...: ";
+	cin.getline(animal.sound.sound, 30);
+	return animal;
+}
+Animal* AnimalDynamicArray(int number)
+{
+	return new Animal[number];
+}
+void Show(Animal animal)
+{
+	cout << "Name: " << animal.name << endl;
+	cout << "Class: " << animal.clas << endl;
+	cout << "Nickname: " << animal.nickname << endl;
+	cout << "Animal says...: " << animal.sound.sound << endl;
+}
+
+
+
+int main()
+{
+	cout << "- FIRST TASK -" << endl;
+	WashingMachine ws1 = createWS();
+	cout << endl;
+	cout << "---------------------------" << endl;
+	cout << "WASHING MACHINE: PARAMETERS" << endl;
+	Show(ws1);
+	cout << "---------------------------" << endl << endl;
+
+	cout << "- SECOND TASK -" << endl;
+	int amount;
+	cout << "Enter the amount of items: ";
+	cin >> amount;
+	Iron* ironDynamicArray = IronDynamicArray(amount);
+	for (int i = 0; i < amount; i++)
+	{
+		cout << "Iron #" << 1 + i << ": " << endl;
+		ironDynamicArray[i] = createIron();
+		cout << endl;
+	}
+	cout << "---------------------------" << endl;
+	cout << "IRONS: PARAMETERS" << endl;
+	for (int i = 0; i < amount; i++)
+	{
+		cout << "Iron #" << 1 + i << ": " << endl;
+		Show(ironDynamicArray[i]);
+		cout << endl;
+	}
+	cout << "---------------------------" << endl << endl;
+	delete[] ironDynamicArray;
+
+	cout << "- THIRD TASK -" << endl;
+	int quantity;
+	cout << "Enter the quantity of items: ";
+	cin >> quantity;
+	Boiler* boilerDynamicArray = BoilerDynamicArray(quantity);
+	for (int i = 0; i < quantity; i++)
+	{
+		cout << "Boiler #" << 1 + i << ": " << endl;
+		boilerDynamicArray[i] = createBoiler();
+		cout << endl;
+	}
+	cout << "---------------------------" << endl;
+	cout << "BOILERS: PARAMETERS" << endl;
+	for (int i = 0; i < quantity; i++)
+	{
+		cout << "Boiler #" << 1 + i << ": " << endl;
+		Show(boilerDynamicArray[i]);
+		cout << endl;
+	}
+	cout << "---------------------------" << endl << endl;
+	delete[] boilerDynamicArray;
+
+	cout << "- FOURTH TASK -" << endl;
+	int number;
+	cout << "Enter number of items: ";
+	cin >> number;
+	Animal* animalDynamicArray = AnimalDynamicArray(number);
+	for (int i = 0; i < number; i++)
+	{
+		cout << "Animal #" << 1 + i << ": " << endl;
+		animalDynamicArray[i] = createAnimal();
+		cout << endl;
+	}
+	cout << "---------------------------" << endl;
+	cout << "ANIMALS: DATA" << endl;
+	for (int i = 0; i < number; i++)
+	{
+		cout << "Animal #" << 1 + i << ": " << endl;
+		Show(animalDynamicArray[i]);
+		cout << endl;
+	}
+	cout << "---------------------------" << endl << endl;
+	delete[] animalDynamicArray;
+	return 0;
+}
