@@ -1,0 +1,268 @@
+#include <iostream>
+#include <cstring>
+#include <stdio.h>
+using namespace std;
+
+// first task
+struct Student
+{
+	char* name;
+	unsigned short age;
+	float averageGrade;
+};
+void FillingInStudent(Student* students)
+{
+	int sizeData = 0;
+	const int N = 200;
+	char data[200];
+
+	cout << "Enter name: ";
+	cin >> data;
+	sizeData = strlen(data) + 1;
+	students->name = new char[sizeData];
+	strcpy_s(students->name, sizeData, data);
+	cin.ignore();
+
+	cout << "Enter age: ";
+	cin >> students->age;
+
+	cout << "Enter average grade: ";
+	cin >> students->averageGrade;
+}
+void PrintOutStudent(Student* students)
+{
+	cout << "Name: " << students->name << "; " << "Age: " << students->age << "; "
+		<< "Average grade: " << students->averageGrade << endl;
+}
+float MaxAverageGrade(Student* students, const int size)
+{
+	Student maxAvGrade = students[0];
+	for (int i = 0; i < size; i++)
+	{
+		if (students[i].averageGrade > maxAvGrade.averageGrade)
+		{
+			maxAvGrade = students[i];
+		}
+	}
+	return maxAvGrade.averageGrade;
+}
+Student FindStudentWithMaxAVerageGrade(float maxAvGrade, Student* students, const int size)
+{
+	Student studentWithMaxAVGrade = students[0];
+	for (int i = 0; i < size; i++)
+	{
+		if (maxAvGrade == students[i].averageGrade)
+		{
+			return students[i];
+		}
+	}
+}
+void ClearStudent(Student* students)
+{
+	delete[] students->name;
+}
+
+// second task
+struct Book
+{
+	char* title;
+	char* author;
+	unsigned short year;
+};
+void FillingInBook(Book* books)
+{
+	int sizeData = 0;
+	const int N = 200;
+	char data[200];
+
+	cout << "Enter title: ";
+	cin.ignore();
+	cin.getline(data, N);
+	sizeData = strlen(data) + 1;
+	books->title = new char[sizeData];
+	strcpy_s(books->title, sizeData, data);
+
+	cout << "Enter author: ";
+	cin.getline(data, N);
+	sizeData = strlen(data) + 1;
+	books->author = new char[sizeData];
+	strcpy_s(books->author, sizeData, data);
+
+	cout << "Enter year: ";
+	cin >> books->year;
+}
+void PrintOutBook(Book* books)
+{
+	cout << "Title: " << books->title << "; " << "Author: " << books->author << "; "
+		<< "Year: " << books->year << endl;
+}
+void FindBooksByYearOfPublication(Book* books, const int size, int yearOfPublication)
+{
+	int j = 0;
+	bool found = false;
+	for (int i = 0; i < size; i++)
+	{
+		if (books[i].year == yearOfPublication)
+		{
+			cout << "Title #" << j + 1 << ": " << books[i].title << endl;
+			j++;
+			found = true;
+		}
+	}
+	if (!found)
+	{
+		cout << "No books found for year " << yearOfPublication << endl;
+	}
+}
+void ClearBook(Book* books)
+{
+	delete[] books->title;
+	delete[] books->author;
+}
+
+// third task 
+struct Rectangle
+{
+	float width;
+	float height;
+};
+void CreateRectangle(Rectangle* rectangle)
+{
+	cout << "Enter width: ";
+	cin >> rectangle->width;
+	cout << "Enter height: ";
+	cin >> rectangle->height;
+}
+void PrintOutRectangle(Rectangle* rectangle)
+{
+	cout << "Width: " << rectangle->width << endl;
+	cout << "Height: " << rectangle->height << endl;
+}
+float* AreaOfARectange(Rectangle* rectangle, const int size)
+{
+	float* area = new float[size];
+	for (int i = 0; i < size; i++)
+	{
+		area[i] = rectangle[i].width * rectangle[i].height;
+	}
+	return area;
+}
+
+int main()
+{
+	cout << "FIRST TASK" << endl;
+	int size1;
+	cout << "Enter the number of students: ";
+	cin >> size1;
+	cout << endl;
+	Student* students = new Student[size1];
+
+	// filling in
+	cout << "Filling in students' data..." << endl;
+	for (int i = 0; i < size1; i++)
+	{
+		cout << "- Student #" << 1 + i << endl;
+		FillingInStudent(&students[i]);
+	}
+	cout << endl;
+
+	// printing out
+	cout << "Infomation about students" << endl;
+	for (int i = 0; i < size1; i++)
+	{
+		cout << "- Student #" << 1 + i << endl;
+		PrintOutStudent(&students[i]);
+	}
+	cout << endl;
+
+	// average grade
+	float maxAvGrade = MaxAverageGrade(students, size1);
+	Student studentWithMaxAvGrade = FindStudentWithMaxAVerageGrade(maxAvGrade, students, size1);
+	cout << "Summary about grades" << endl;
+	cout << "Student with max avarage grade: " << studentWithMaxAvGrade.name << endl;
+	cout << "Max avarage grade: " << maxAvGrade;
+	cout << endl << endl << endl;
+
+	// deleting memory
+	for (int i = 0; i < size1; i++)
+	{
+		ClearStudent(&students[i]);
+	}
+	delete[] students;
+
+
+	cout << "SECOND TASK" << endl;
+	int size2;
+	cout << "Enter the number of books: ";
+	cin >> size2;
+	cout << endl;
+	Book* books = new Book[size2];
+
+	// filling in
+	cout << "Filling in books' data..." << endl;
+	for (int i = 0; i < size2; i++)
+	{
+		cout << "- Book #" << 1 + i << endl;
+		FillingInBook(&books[i]);
+	}
+	cout << endl;
+
+	// printing out
+	cout << "Infomation about books" << endl;
+	for (int i = 0; i < size2; i++)
+	{
+		cout << "- Book #" << 1 + i << endl;
+		PrintOutBook(&books[i]);
+	}
+	cout << endl;
+
+	// year
+	int yearOfPublication;
+	cout << "Enter the year for which you want to see the books (xxxx): ";
+	cin >> yearOfPublication;
+	cout << "Year: " << yearOfPublication << endl;
+	FindBooksByYearOfPublication(books, size2, yearOfPublication);
+	cout << endl << endl;
+
+	// deleting memory
+	for (int i = 0; i < size2; i++)
+	{
+		ClearBook(&books[i]);
+	}
+	delete[] books;
+
+
+	cout << "THIRD TASK" << endl;
+	int size3;
+	cout << "Enter the number of rectangles: ";
+	cin >> size3;
+
+	// rectangles' creating
+	cout << "Creation of rectangles..." << endl;
+	Rectangle* rectangle = new Rectangle[size3];
+	for (int i = 0; i < size3; i++)
+	{
+		cout << "- Rectangle #" << 1 + i << endl;
+		CreateRectangle(&rectangle[i]);
+	}
+	cout << endl;
+
+	// printing rectangles out
+	cout << "Given conditions" << endl;
+	for (int i = 0; i < size3; i++)
+	{
+		cout << "- Rectangle #" << 1 + i << endl;
+		PrintOutRectangle(&rectangle[i]);
+	}
+	cout << endl;
+
+	// area of a rectangles
+	cout << "Areas" << endl;
+	float* area = AreaOfARectange(rectangle, size3);
+	for (int i = 0; i < size3; i++)
+	{
+		cout << "Area of a rectangle #" << 1 + i << " = " << area[i] << endl;
+	}
+	delete[] rectangle;
+	return 0;
+}
