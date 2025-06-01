@@ -1,0 +1,99 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+bool isVowel(char ch)
+{
+	if (ch >= 'A' && ch <= 'Z')
+	{
+		ch = ch + ('a' - 'A');
+	}
+	return (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u');
+}
+bool isLetter(char ch)
+{
+	return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
+}
+bool isNumber(char ch)
+{
+	return (ch >= '0' && ch <= '9');
+}
+
+int main()
+{
+	const int SIZE = 256;
+	const char* PATH_TO_INPUT = "input.txt";
+	char input_phrase[SIZE];
+	const char* PATH_TO_OUTPUT = "output.txt";
+	FILE* file = nullptr;
+	int code;
+	if ((code = fopen_s(&file, PATH_TO_INPUT, "w")) == 0)
+	{
+		cout << "Enter something to fill in an input file" << endl;
+		cin.getline(input_phrase, SIZE);
+		fputs(input_phrase, file);
+		fclose(file);
+	}
+	else
+	{
+		cout << "ERROR!" << endl;
+	}
+
+	if ((code = fopen_s(&file, PATH_TO_INPUT, "r")) != 0 || file == nullptr)
+	{
+		cout << "ERROR! Could not open file for reading :(" << endl;
+		return 1;
+	}
+
+	int ch;
+	int char_count = 0;
+	int line_count = 0;
+	int vowel_count = 0;
+	int consonant_count = 0;
+	int number_count = 0;
+	int last_char = '\n';
+	while ((ch = fgetc(file)) != EOF)
+	{
+		char_count++;
+		if (ch == '\n')
+		{
+			line_count++;
+		}
+		if (isNumber(ch))
+		{
+			number_count++;
+		}
+		else if (isLetter(ch))
+		{
+			if (isVowel(ch))
+			{
+				vowel_count++;
+			}
+			else
+			{
+				consonant_count++;
+			}
+			last_char = ch;
+		}
+		if (char_count > 0 && last_char != '\n')
+		{
+			line_count++;
+		}
+	}
+	fclose(file);
+
+	if ((code = fopen_s(&file, PATH_TO_OUTPUT, "w")) != 0 || file == nullptr)
+	{
+		cout << "ERROR! Could not open file for reading :(" << endl;
+		return 1;
+	}
+
+	fprintf(file, "Number of characters: %d\n", char_count);
+	fprintf(file, "Number of lines: %d\n", line_count);
+	fprintf(file, "Number of vowels: %d\n", vowel_count);
+	fprintf(file, "Number of consonant: %d\n", consonant_count);
+	fprintf(file, "Number of numbers: %d\n", number_count);
+	fclose(file);
+	cout << "Success! Statistics saved to output.txt" << endl;
+	return 0;
+}
