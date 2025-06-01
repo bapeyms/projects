@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+
+struct Student
+{
+	char* name;
+	unsigned int age;
+	float grade;
+};
+void CreateStudent(Student* students, int index)
+{
+	int sizeData = 0;
+	const int N = 256;
+	char data[N];
+
+	cin.ignore();
+	cout << "Enter name: ";
+	cin.getline(data, N);
+	sizeData = strlen(data) + 1;
+	students[index].name = new char[sizeData];
+	strcpy_s(students[index].name, sizeData, data);
+
+	cout << "Enter age: ";
+	cin >> students[index].age;
+
+	cout << "Enter average grade: ";
+	cin >> students[index].grade;
+	cout << endl;
+}
+void ShowStudent(Student* students, int index)
+{
+	cout << "Name: " << students[index].name << endl;
+	cout << "Age: " << students[index].age << endl;
+	cout << "Average grade: " << students[index].grade << endl;
+}
+void BinarySave(const char* filename, Student* students, int size)
+{
+	FILE* file = nullptr;
+	if (fopen_s(&file, filename, "wb") != 0 || file == nullptr)
+	{
+		cout << "ERROR!" << endl;
+		return;
+	}
+	fwrite(&size, sizeof(int), 1, file);
+	for (int i = 0; i < size; i++)
+	{
+		int len = strlen(students[i].name) + 1;
+		fwrite(&len, sizeof(int), 1, file);
+		fwrite(students[i].name, sizeof(char), len, file);
+		fwrite(&students[i].age, sizeof(unsigned int), 1, file);
+		fwrite(&students[i].grade, sizeof(float), 1, file);
+	}
+	fclose(file);
+	cout << endl;
+	cout << "Data saved successfully!" << endl;
+}
+void Delete(Student* students, int index)
+{
+	delete[] students[index].name;
+}
+
+int main()
+{
+	int size;
+	cout << "Enter number of students, which you'd like to fill in: ";
+	cin >> size;
+	Student* students = new Student[size];
+	cout << "- FILLING -" << endl;
+	for (int i = 0; i < size; i++)
+	{
+		cout << "Student #" << i+1 << ": " << endl;
+		CreateStudent(students, i);
+	}
+
+	cout << "- SHOWING -" << endl;
+	for (int i = 0; i < size; i++)
+	{
+		cout << "Student #" << i + 1 << ": " << endl;
+		ShowStudent(students, i);
+	}
+
+	BinarySave("students.bin", students, size);
+
+	// DELETING
+	for (int i = 0; i < size; i++)
+	{
+		Delete(students, i);
+	}
+	delete[] students;
+	return 0;
+}
